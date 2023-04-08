@@ -16,3 +16,11 @@ export const connectionOptionsPostgres13: PostgresConnectionOptions = {
 	username: env.TEST_POSTGRES13_USERNAME,
 	password: env.TEST_POSTGRES13_PASSWORD,
 };
+
+export const connectionOptionsPostgres14: PostgresConnectionOptions = {
+	host: env.TEST_POSTGRES14_HOST,
+	port: env.TEST_POSTGRES14_PORT,
+	database: env.TEST_POSTGRES14_DATABASE,
+	username: env.TEST_POSTGRES14_USERNAME,
+	password: env.TEST_POSTGRES14_PASSWORD,
+};

@@ -17,6 +17,12 @@ export class Environment extends AppConfig {
 	readonly TEST_POSTGRES13_USERNAME = 'riao';
 	readonly TEST_POSTGRES13_PASSWORD = 'password1234';
 	readonly TEST_POSTGRES13_DATABASE = 'riao';
+
+	readonly TEST_POSTGRES14_HOST = 'localhost';
+	readonly TEST_POSTGRES14_PORT = 5434;
+	readonly TEST_POSTGRES14_USERNAME = 'riao';
+	readonly TEST_POSTGRES14_PASSWORD = 'password1234';
+	readonly TEST_POSTGRES14_DATABASE = 'riao';
 }
 
 /**
