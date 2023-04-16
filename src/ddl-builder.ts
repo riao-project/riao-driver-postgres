@@ -2,6 +2,7 @@ import {
 	ColumnOptions,
 	ColumnType,
 	DataDefinitionBuilder,
+	GrantOptions,
 } from 'riao-dbal/src';
 
 export class PostgresDataDefinitionBuilder extends DataDefinitionBuilder {
@@ -25,5 +26,26 @@ export class PostgresDataDefinitionBuilder extends DataDefinitionBuilder {
 		}
 
 		return super.createTableColumn(column);
+	}
+
+	public grant(options: GrantOptions): this {
+		if (!Array.isArray(options.privileges)) {
+			options.privileges = [options.privileges];
+		}
+
+		if (!Array.isArray(options.to)) {
+			options.to = [options.to];
+		}
+
+		if (options.privileges.includes('ALL') && options.on === '*') {
+			for (const user of options.to) {
+				this.sql += 'ALTER USER ' + user + ' ';
+				this.sql += 'WITH SUPERUSER; ';
+			}
+
+			return this;
+		}
+
+		return super.grant(options);
 	}
 }
