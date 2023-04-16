@@ -9,7 +9,5 @@ test({
 	db: DatabasePostgres13,
 	expectedVersion: /^13\.[0-9]+$/,
 	connectionOptions: connectionOptionsPostgres13,
-	rootUsername: env.TEST_POSTGRES13_ROOT_USERNAME,
-	rootPassword: env.TEST_POSTGRES13_ROOT_PASSWORD,
 	rootDatabase: env.TEST_POSTGRES13_ROOT_DATABASE,
 });
