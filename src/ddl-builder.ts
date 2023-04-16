@@ -4,6 +4,7 @@ import {
 	DataDefinitionBuilder,
 	GrantOptions,
 } from 'riao-dbal/src';
+import { ChangeColumnOptions } from 'riao-dbal/src/ddl/alter-table';
 
 export class PostgresDataDefinitionBuilder extends DataDefinitionBuilder {
 	public getAutoIncrement(): string {
@@ -26,6 +27,21 @@ export class PostgresDataDefinitionBuilder extends DataDefinitionBuilder {
 		}
 
 		return super.createTableColumn(column);
+	}
+
+	public changeColumn(options: ChangeColumnOptions): this {
+		// Rename column first, if required
+		if (options.column !== options.options.name) {
+			this.sql +=
+				`ALTER TABLE ${options.table} ` +
+				`RENAME COLUMN ${options.column} TO ` +
+				`${options.options.name};`;
+		}
+
+		options.column = '';
+		options.options.name += ' TYPE ';
+
+		return super.changeColumn(options);
 	}
 
 	public grant(options: GrantOptions): this {
