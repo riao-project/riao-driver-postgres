@@ -8,12 +8,14 @@ import {
 } from 'riao-dbal/src';
 import { PostgresDataDefinitionBuilder } from './ddl-builder';
 import { PostgresQueryBuilder } from './query-builder';
+import { PostgresSchemaQueryRepository } from './schema-query-repository';
 
 export type PostgresConnectionOptions = DatabaseConnectionOptions;
 
 export class PostgresDriver extends DatabaseDriver {
 	dataDefinitionBulider = PostgresDataDefinitionBuilder;
 	queryBuilder = PostgresQueryBuilder;
+	schemaQueryRepository = PostgresSchemaQueryRepository;
 
 	protected conn: Pool;
 
