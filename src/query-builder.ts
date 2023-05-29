@@ -10,4 +10,10 @@ export class PostgresQueryBuilder extends DatabaseQueryBuilder {
 
 		return this;
 	}
+
+	public insertReturning(primaryKey: string): this {
+		this.sql += ` RETURNING ${primaryKey}`;
+
+		return this;
+	}
 }
