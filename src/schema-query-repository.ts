@@ -8,9 +8,9 @@ export class PostgresSchemaQueryRepository extends SchemaQueryRepository {
 	protected columnTypeColumn = 'data_type';
 	protected columnPositionColumn = 'ordinal_position';
 
-	public getTablesWhere() {
+	public getTablesQueryWhere() {
 		return {
-			...super.getTablesWhere(),
+			...super.getTablesQueryWhere(),
 			table_schema: 'public',
 		};
 	}
