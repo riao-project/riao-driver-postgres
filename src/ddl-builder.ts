@@ -7,6 +7,15 @@ import {
 import { ChangeColumnOptions } from 'riao-dbal/src/ddl/alter-table';
 
 export class PostgresDataDefinitionBuilder extends DataDefinitionBuilder {
+	public constructor() {
+		super();
+
+		this.columnTypes = <any>{
+			...this.columnTypes,
+			TINYINT: 'SMALLINT',
+		};
+	}
+
 	public getAutoIncrement(): string {
 		return '';
 	}
