@@ -13,6 +13,7 @@ export class PostgresDataDefinitionBuilder extends DataDefinitionBuilder {
 		this.columnTypes = <any>{
 			...this.columnTypes,
 			TINYINT: 'SMALLINT',
+			DOUBLE: 'REAL',
 		};
 	}
 
