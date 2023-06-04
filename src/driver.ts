@@ -1,4 +1,4 @@
-import { Pool } from 'pg';
+import { Pool, types } from 'pg';
 
 import {
 	DatabaseConnectionOptions,
@@ -11,6 +11,8 @@ import { PostgresQueryBuilder } from './query-builder';
 import { PostgresSchemaQueryRepository } from './schema-query-repository';
 
 export type PostgresConnectionOptions = DatabaseConnectionOptions;
+
+types.setTypeParser(types.builtins.DATE, (val) => new Date(val));
 
 export class PostgresDriver extends DatabaseDriver {
 	dataDefinitionBulider = PostgresDataDefinitionBuilder;
