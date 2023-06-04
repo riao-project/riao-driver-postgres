@@ -15,6 +15,7 @@ export class PostgresDataDefinitionBuilder extends DataDefinitionBuilder {
 			TINYINT: 'SMALLINT',
 			DOUBLE: 'REAL',
 			DATETIME: 'TIMESTAMP',
+			BLOB: 'BYTEA',
 		};
 	}
 
