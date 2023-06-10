@@ -19,11 +19,11 @@ export class PostgresDataDefinitionBuilder extends DataDefinitionBuilder {
 		};
 	}
 
-	public getAutoIncrement(): string {
-		return '';
+	public columnAutoIncrement() {
+		return this;
 	}
 
-	public createTableColumn(column: ColumnOptions): string {
+	public createTableColumn(column: ColumnOptions) {
 		if ('autoIncrement' in column && column.autoIncrement) {
 			column.autoIncrement = false;
 
