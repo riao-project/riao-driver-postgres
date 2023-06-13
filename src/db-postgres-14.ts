@@ -1,10 +1,15 @@
 import { Database } from 'riao-dbal/src/database';
-import { Postgres14Driver } from './driver-postgres-14';
-import { DatabaseEnvPostgres14 } from './env-postgres-14';
-import { Postgres14SchemaQueryRepository } from './schema-query-repository-14';
+import { PostgresDriver } from './driver';
+import { DatabaseEnvPostgres } from './env';
+import { PostgresSchemaQueryRepository } from './schema-query-repository';
+import { PostgresDataDefinitionBuilder } from './ddl-builder';
+import { PostgresQueryBuilder } from './query-builder';
 
 export class DatabasePostgres14 extends Database {
-	driverType = Postgres14Driver;
-	envType = DatabaseEnvPostgres14;
-	schemaQuery: Postgres14SchemaQueryRepository;
+	driverType = PostgresDriver;
+	envType = DatabaseEnvPostgres;
+
+	ddlBuilderType = PostgresDataDefinitionBuilder;
+	queryBuilderType = PostgresQueryBuilder;
+	schemaQueryRepositoryType = PostgresSchemaQueryRepository;
 }

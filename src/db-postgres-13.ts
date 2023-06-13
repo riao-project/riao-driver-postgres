@@ -1,10 +1,15 @@
 import { Database } from 'riao-dbal/src/database';
-import { Postgres13Driver } from './driver-postgres-13';
-import { DatabaseEnvPostgres13 } from './env-postgres-13';
-import { Postgres13SchemaQueryRepository } from './schema-query-repository-13';
+import { PostgresDriver } from './driver';
+import { DatabaseEnvPostgres } from './env';
+import { PostgresSchemaQueryRepository } from './schema-query-repository';
+import { PostgresDataDefinitionBuilder } from './ddl-builder';
+import { PostgresQueryBuilder } from './query-builder';
 
 export class DatabasePostgres13 extends Database {
-	driverType = Postgres13Driver;
-	envType = DatabaseEnvPostgres13;
-	schemaQuery: Postgres13SchemaQueryRepository;
+	driverType = PostgresDriver;
+	envType = DatabaseEnvPostgres;
+
+	ddlBuilderType = PostgresDataDefinitionBuilder;
+	queryBuilderType = PostgresQueryBuilder;
+	schemaQueryRepositoryType = PostgresSchemaQueryRepository;
 }

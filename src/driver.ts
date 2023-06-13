@@ -6,19 +6,12 @@ import {
 	DatabaseQueryResult,
 	DatabaseQueryTypes,
 } from 'riao-dbal/src';
-import { PostgresDataDefinitionBuilder } from './ddl-builder';
-import { PostgresQueryBuilder } from './query-builder';
-import { PostgresSchemaQueryRepository } from './schema-query-repository';
 
 export type PostgresConnectionOptions = DatabaseConnectionOptions;
 
 types.setTypeParser(types.builtins.DATE, (val) => new Date(val));
 
 export class PostgresDriver extends DatabaseDriver {
-	dataDefinitionBulider = PostgresDataDefinitionBuilder;
-	queryBuilder = PostgresQueryBuilder;
-	schemaQueryRepository = PostgresSchemaQueryRepository;
-
 	protected conn: Pool;
 
 	public async connect(options: PostgresConnectionOptions): Promise<this> {
