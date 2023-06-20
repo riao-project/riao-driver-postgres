@@ -9,7 +9,11 @@ import {
 
 export type PostgresConnectionOptions = DatabaseConnectionOptions;
 
-types.setTypeParser(types.builtins.DATE, (val) => new Date(val));
+const dateTypes = [types.builtins.DATE, types.builtins.TIMESTAMPTZ];
+
+for (const type of dateTypes) {
+	types.setTypeParser(type, (val) => new Date(val));
+}
 
 export class PostgresDriver extends DatabaseDriver {
 	protected conn: Pool;
