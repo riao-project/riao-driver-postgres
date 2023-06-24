@@ -16,6 +16,9 @@ export class PostgresDataDefinitionBuilder extends DataDefinitionBuilder {
 			DOUBLE: 'REAL',
 			DATETIME: 'TIMESTAMPTZ',
 			BLOB: 'BYTEA',
+			SMALLSERIAL: 'SMALLSERIAL',
+			SERIAL: 'SERIAL',
+			BIGSERIAL: 'BIGSERIAL',
 		};
 	}
 
@@ -25,16 +28,14 @@ export class PostgresDataDefinitionBuilder extends DataDefinitionBuilder {
 
 	public createTableColumn(column: ColumnOptions) {
 		if ('autoIncrement' in column && column.autoIncrement) {
-			column.autoIncrement = false;
-
 			if (column.type === ColumnType.SMALLINT) {
-				column.type = <any>ColumnType.SMALLSERIAL;
+				column.type = <any>'SMALLSERIAL';
 			}
 			else if (column.type === ColumnType.INT) {
-				column.type = <any>ColumnType.SERIAL;
+				column.type = <any>'SERIAL';
 			}
 			else if (column.type === ColumnType.BIGINT) {
-				column.type = <any>ColumnType.BIGSERIAL;
+				column.type = <any>'BIGSERIAL';
 			}
 		}
 
