@@ -28,7 +28,10 @@ export class PostgresDataDefinitionBuilder extends DataDefinitionBuilder {
 
 	public createTableColumn(column: ColumnOptions) {
 		if ('autoIncrement' in column && column.autoIncrement) {
-			if (column.type === ColumnType.SMALLINT) {
+			if (column.type === ColumnType.TINYINT) {
+				column.type = <any>'SMALLSERIAL';
+			}
+			else if (column.type === ColumnType.SMALLINT) {
 				column.type = <any>'SMALLSERIAL';
 			}
 			else if (column.type === ColumnType.INT) {
