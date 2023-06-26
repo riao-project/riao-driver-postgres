@@ -14,7 +14,7 @@ export class PostgresDataDefinitionBuilder extends DataDefinitionBuilder {
 			...this.columnTypes,
 			TINYINT: 'SMALLINT',
 			DOUBLE: 'REAL',
-			DATETIME: 'TIMESTAMPTZ',
+			TIMESTAMP: 'TIMESTAMPTZ',
 			BLOB: 'BYTEA',
 			SMALLSERIAL: 'SMALLSERIAL',
 			SERIAL: 'SERIAL',
