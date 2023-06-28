@@ -1,4 +1,4 @@
-import { Database } from 'riao-dbal/src/database';
+import { Database } from '@riao/dbal/database';
 import { PostgresDriver } from './driver';
 import { DatabaseEnvPostgres } from './env';
 import { PostgresSchemaQueryRepository } from './schema-query-repository';

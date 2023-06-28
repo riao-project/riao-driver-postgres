@@ -1,4 +1,4 @@
-import { DatabaseRecord, SchemaQueryRepository } from 'riao-dbal/src';
+import { DatabaseRecord, SchemaQueryRepository } from '@riao/dbal';
 
 export class PostgresSchemaQueryRepository extends SchemaQueryRepository {
 	protected databaseNameColumn = 'table_catalog';

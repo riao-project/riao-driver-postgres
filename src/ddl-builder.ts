@@ -3,8 +3,8 @@ import {
 	ColumnType,
 	DataDefinitionBuilder,
 	GrantOptions,
-} from 'riao-dbal/src';
-import { ChangeColumnOptions } from 'riao-dbal/src/ddl/alter-table';
+} from '@riao/dbal';
+import { ChangeColumnOptions } from '@riao/dbal/ddl/alter-table';
 
 export class PostgresDataDefinitionBuilder extends DataDefinitionBuilder {
 	public constructor() {

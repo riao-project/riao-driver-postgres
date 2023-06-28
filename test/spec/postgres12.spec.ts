@@ -1,7 +1,7 @@
 import 'jasmine';
 import { DatabasePostgres12 } from '../../src';
 import { connectionOptionsPostgres12 } from '../connection-options';
-import { test } from 'riao-driver-test/src';
+import { test } from '@riao/driver-test';
 import { env } from '../env';
 
 test({
