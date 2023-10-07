@@ -5,6 +5,7 @@ import {
 	DatabaseDriver,
 	DatabaseQueryResult,
 	DatabaseQueryTypes,
+	Transaction,
 } from '@riao/dbal';
 
 export type PostgresConnectionOptions = DatabaseConnectionOptions;
@@ -16,7 +17,7 @@ for (const type of dateTypes) {
 }
 
 export class PostgresDriver extends DatabaseDriver {
-	protected conn: Pool;
+	public conn: Pool;
 
 	public async connect(options: PostgresConnectionOptions): Promise<this> {
 		this.conn = new Pool({
@@ -66,5 +67,33 @@ export class PostgresDriver extends DatabaseDriver {
 		}
 
 		return null;
+	}
+
+	public async transaction<T>(
+		fn: (transaction: Transaction) => Promise<T>,
+		transaction: Transaction
+	): Promise<T> {
+		const pgConnection = await this.conn.connect();
+		let result: T;
+
+		transaction.driver.conn = pgConnection;
+		transaction.ddl.setDriver(transaction.driver);
+		transaction.query.setDriver(transaction.driver);
+
+		await pgConnection.query('BEGIN');
+
+		try {
+			result = await fn(transaction);
+			await pgConnection.query('COMMIT');
+			pgConnection.release();
+		}
+		catch (e) {
+			await pgConnection.query('ROLLBACK');
+			pgConnection.release();
+
+			throw e;
+		}
+
+		return result;
 	}
 }
