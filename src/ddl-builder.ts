@@ -46,18 +46,29 @@ export class PostgresDataDefinitionBuilder extends DataDefinitionBuilder {
 	}
 
 	public changeColumn(options: ChangeColumnOptions): this {
+		let newColumnName = options.column;
+
 		// Rename column first, if required
 		if (options.column !== options.options.name) {
-			this.sql +=
-				`ALTER TABLE ${options.table} ` +
-				`RENAME COLUMN ${options.column} TO ` +
-				`${options.options.name};`;
+			this.alterTableStatement(options.table);
+
+			this.sql += 'RENAME COLUMN ';
+			this.columnName(options.column);
+			this.sql += ' TO ';
+			this.columnName(options.options.name);
+			this.sql += ';';
+
+			newColumnName = options.options.name;
 		}
 
-		options.column = '';
-		options.options.name += ' TYPE ';
+		this.alterTableStatement(options.table);
+		this.alterColumnStatement(newColumnName);
 
-		return super.changeColumn(options);
+		this.sql += ' TYPE ';
+
+		this.createTableColumn({ ...options.options, name: '' });
+
+		return this;
 	}
 
 	public grant(options: GrantOptions): this {
