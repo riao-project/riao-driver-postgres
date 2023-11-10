@@ -5,6 +5,7 @@ import {
 	GrantOptions,
 } from '@riao/dbal';
 import { ChangeColumnOptions } from '@riao/dbal/ddl/alter-table';
+import { PostgresSqlBuilder } from './sql-builder';
 
 export class PostgresDataDefinitionBuilder extends DataDefinitionBuilder {
 	public constructor() {
@@ -20,6 +21,10 @@ export class PostgresDataDefinitionBuilder extends DataDefinitionBuilder {
 			SERIAL: 'SERIAL',
 			BIGSERIAL: 'BIGSERIAL',
 		};
+	}
+
+	public getSqlType() {
+		return PostgresSqlBuilder;
 	}
 
 	public columnAutoIncrement() {
@@ -52,11 +57,11 @@ export class PostgresDataDefinitionBuilder extends DataDefinitionBuilder {
 		if (options.column !== options.options.name) {
 			this.alterTableStatement(options.table);
 
-			this.sql += 'RENAME COLUMN ';
-			this.columnName(options.column);
-			this.sql += ' TO ';
-			this.columnName(options.options.name);
-			this.sql += ';';
+			this.sql.append('RENAME COLUMN ');
+			this.sql.columnName(options.column);
+			this.sql.append(' TO ');
+			this.sql.columnName(options.options.name);
+			this.sql.append(';');
 
 			newColumnName = options.options.name;
 		}
@@ -64,7 +69,7 @@ export class PostgresDataDefinitionBuilder extends DataDefinitionBuilder {
 		this.alterTableStatement(options.table);
 		this.alterColumnStatement(newColumnName);
 
-		this.sql += ' TYPE ';
+		this.sql.append(' TYPE ');
 
 		this.createTableColumn({ ...options.options, name: '' });
 
@@ -82,8 +87,8 @@ export class PostgresDataDefinitionBuilder extends DataDefinitionBuilder {
 
 		if (options.privileges.includes('ALL') && options.on === '*') {
 			for (const user of options.to) {
-				this.sql += 'ALTER USER ' + user + ' ';
-				this.sql += 'WITH SUPERUSER; ';
+				this.sql.append('ALTER USER ' + user + ' ');
+				this.sql.append('WITH SUPERUSER; ');
 			}
 
 			return this;
