@@ -6,8 +6,11 @@ import {
 } from '@riao/dbal';
 import { ChangeColumnOptions } from '@riao/dbal/ddl/alter-table';
 import { PostgresSqlBuilder } from './sql-builder';
+import { PostgresQueryBuilder } from './query-builder';
 
 export class PostgresDataDefinitionBuilder extends DataDefinitionBuilder {
+	protected queryBuilderType = PostgresQueryBuilder;
+
 	public constructor() {
 		super();
 

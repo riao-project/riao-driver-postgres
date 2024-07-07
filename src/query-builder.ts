@@ -11,4 +11,10 @@ export class PostgresQueryBuilder extends DatabaseQueryBuilder {
 
 		return this;
 	}
+
+	public uuid(): this {
+		this.sql.append('gen_random_uuid()');
+
+		return this;
+	}
 }
