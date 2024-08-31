@@ -30,6 +30,18 @@ export class PostgresDataDefinitionBuilder extends DataDefinitionBuilder {
 		return PostgresSqlBuilder;
 	}
 
+	public disableForeignKeyChecks(): this {
+		this.sql.append('SET session_replication_role = \'replica\'');
+
+		return this;
+	}
+
+	public enableForeignKeyChecks(): this {
+		this.sql.append('SET session_replication_role = \'origin\';');
+
+		return this;
+	}
+
 	public columnAutoIncrement() {
 		return this;
 	}
