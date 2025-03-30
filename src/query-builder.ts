@@ -1,6 +1,11 @@
-import { DatabaseFunctions, DatabaseQueryBuilder } from '@riao/dbal';
+import {
+	DatabaseFunctions,
+	DatabaseQueryBuilder,
+	Expression,
+} from '@riao/dbal';
 import { PostgresSqlBuilder } from './sql-builder';
 import { DatabaseFunction } from '@riao/dbal/functions/function-token';
+import { SetOptions } from '@riao/dbal/dml/set-options';
 
 export class PostgresQueryBuilder extends DatabaseQueryBuilder {
 	public getSqlType() {
@@ -30,6 +35,18 @@ export class PostgresQueryBuilder extends DatabaseQueryBuilder {
 		}
 
 		this.sql.closeParens();
+
+		return this;
+	}
+
+	public override setStatement(): this {
+		return this;
+	}
+
+	public override setColumn(options: SetOptions): this {
+		this.sql.append(options.column);
+		this.sql.append(' = ');
+		this.expression(options.value);
 
 		return this;
 	}

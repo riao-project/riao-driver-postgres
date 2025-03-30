@@ -3,6 +3,7 @@ import {
 	ColumnType,
 	DataDefinitionBuilder,
 	GrantOptions,
+	TriggerOptions,
 } from '@riao/dbal';
 import { ChangeColumnOptions } from '@riao/dbal/ddl/alter-table';
 import { PostgresSqlBuilder } from './sql-builder';
@@ -110,5 +111,53 @@ export class PostgresDataDefinitionBuilder extends DataDefinitionBuilder {
 		}
 
 		return super.grant(options);
+	}
+
+	public override createTrigger(options: TriggerOptions): this {
+		if (!options.name) {
+			options.name = this.getTriggerName(options);
+		}
+
+		const functionName = options.name + '_func()';
+
+		this.sql.append('CREATE OR REPLACE FUNCTION ');
+		this.sql.append(functionName);
+		this.sql.space();
+
+		this.createTriggerBody(options.body);
+		this.sql.space();
+
+		this.createTriggerStatement();
+		this.sql.append(options.name + ' ');
+		this.createTriggerTableEvent(options);
+		this.createTriggerForEachRow();
+		this.sql.append('EXECUTE FUNCTION ' + functionName);
+
+		this.sql.endStatement();
+
+		return this;
+	}
+
+	public override createTriggerBeginStatement(): this {
+		this.sql.append('RETURNS TRIGGER AS $$ BEGIN ');
+
+		return this;
+	}
+
+	public override createTriggerEndStatement(): this {
+		this.sql.append(' RETURN NEW; END; $$ LANGUAGE plpgsql;');
+
+		return this;
+	}
+
+	public override dropTriggerName(options: {
+		name: string;
+		table: string;
+	}): this {
+		this.sql.columnName(options.name);
+		this.sql.append(' ON ');
+		this.sql.tableName(options.table);
+
+		return this;
 	}
 }
