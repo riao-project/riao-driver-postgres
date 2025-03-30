@@ -38,21 +38,26 @@ export class PostgresDriver extends DatabaseDriver {
 	public async query(
 		options: DatabaseQueryTypes
 	): Promise<DatabaseQueryResult> {
-		let { sql, params } = this.toDatabaseQueryOptions(options);
-		params = params ?? [];
+		const queries = this.toDatabaseQueryOptions(options);
+		let result;
 
-		try {
-			const { rows, fields } = await this.conn.query(sql, params);
+		for (const query of queries) {
+			let { sql, params } = query;
+			params = params ?? [];
 
-			return {
-				results: Array.isArray(rows) ? rows : [rows],
-			};
+			try {
+				const { rows, fields } = await this.conn.query(sql, params);
+
+				result = { results: Array.isArray(rows) ? rows : [rows] };
+			}
+			catch (e) {
+				e.message += ' ' + JSON.stringify({ sql, params });
+
+				throw e;
+			}
 		}
-		catch (e) {
-			e.message += ' ' + JSON.stringify({ sql, params });
 
-			throw e;
-		}
+		return result;
 	}
 
 	public async getVersion(): Promise<string> {
