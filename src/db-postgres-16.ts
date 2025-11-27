@@ -5,10 +5,7 @@ import { PostgresSchemaQueryRepository } from './schema-query-repository';
 import { PostgresDataDefinitionBuilder } from './ddl-builder';
 import { PostgresQueryBuilder } from './query-builder';
 
-/**
- * @deprecated
- */
-export class DatabasePostgres13 extends Database {
+export class DatabasePostgres16 extends Database {
 	driverType = PostgresDriver;
 	envType = DatabaseEnvPostgres;
 

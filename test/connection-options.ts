@@ -32,3 +32,27 @@ export const connectionOptionsPostgres15: PostgresConnectionOptions = {
 	username: env.TEST_POSTGRES15_USERNAME,
 	password: env.TEST_POSTGRES15_PASSWORD,
 };
+
+export const connectionOptionsPostgres16: PostgresConnectionOptions = {
+	host: env.TEST_POSTGRES16_HOST,
+	port: env.TEST_POSTGRES16_PORT,
+	database: env.TEST_POSTGRES16_DATABASE,
+	username: env.TEST_POSTGRES16_USERNAME,
+	password: env.TEST_POSTGRES16_PASSWORD,
+};
+
+export const connectionOptionsPostgres17: PostgresConnectionOptions = {
+	host: env.TEST_POSTGRES17_HOST,
+	port: env.TEST_POSTGRES17_PORT,
+	database: env.TEST_POSTGRES17_DATABASE,
+	username: env.TEST_POSTGRES17_USERNAME,
+	password: env.TEST_POSTGRES17_PASSWORD,
+};
+
+export const connectionOptionsPostgres18: PostgresConnectionOptions = {
+	host: env.TEST_POSTGRES18_HOST,
+	port: env.TEST_POSTGRES18_PORT,
+	database: env.TEST_POSTGRES18_DATABASE,
+	username: env.TEST_POSTGRES18_USERNAME,
+	password: env.TEST_POSTGRES18_PASSWORD,
+};
