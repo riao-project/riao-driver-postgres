@@ -54,6 +54,21 @@ export class PostgresQueryBuilder extends DatabaseQueryBuilder {
 		return this;
 	}
 
+	public override month(fn: DatabaseFunction) {
+		this.sql.append('DATE_PART(\'month\', ');
+
+		if (fn.params?.expr) {
+			this.expression(fn.params.expr);
+		}
+		else {
+			this.expression(DatabaseFunctions.currentTimestamp());
+		}
+
+		this.sql.closeParens();
+
+		return this;
+	}
+
 	public override setStatement(): this {
 		return this;
 	}
