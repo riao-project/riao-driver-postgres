@@ -80,4 +80,30 @@ export class PostgresQueryBuilder extends DatabaseQueryBuilder {
 
 		return this;
 	}
+
+	public override concat(fn: DatabaseFunction): this {
+		const expr = fn.params?.expr ?? [];
+
+		// Postgres doesn't handle CONCAT well with parameterized queries and type inference
+		// Use the || (concatenation) operator instead
+		if (expr.length === 0) {
+			this.sql.append("''");
+		}
+		else if (expr.length === 1) {
+			this.expression(expr[0]);
+		}
+		else {
+			this.sql.append('(');
+			for (let i = 0; i < expr.length; i++) {
+				this.expression(expr[i]);
+
+				if (i < expr.length - 1) {
+					this.sql.append(' || ');
+				}
+			}
+			this.sql.append(')');
+		}
+
+		return this;
+	}
 }
