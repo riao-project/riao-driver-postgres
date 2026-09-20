@@ -21,6 +21,7 @@ export class PostgresDataDefinitionBuilder extends DataDefinitionBuilder {
 			DOUBLE: 'REAL',
 			TIMESTAMP: 'TIMESTAMPTZ',
 			BLOB: 'BYTEA',
+			JSON: 'JSONB',
 			SMALLSERIAL: 'SMALLSERIAL',
 			SERIAL: 'SERIAL',
 			BIGSERIAL: 'BIGSERIAL',
