@@ -108,41 +108,4 @@ export class PostgresQueryBuilder extends DatabaseQueryBuilder {
 		return this;
 	}
 
-	public override intersect(query: SelectQuery): this {
-		// PostgreSQL requires the first SELECT to be wrapped in parentheses
-		// when it has a WHERE clause before INTERSECT
-		const currentSql = this.sql.toString();
-		const hasWhere = currentSql.toUpperCase().includes('WHERE');
-		
-		if (hasWhere) {
-			// Wrap the existing SELECT in parentheses
-			this.sql.prepend('(');
-			this.sql.trimEnd(' ');
-			this.sql.append(')');
-		}
-
-		this.intersectStatement();
-		this.select(query);
-
-		return this;
-	}
-
-	public override intersectAll(query: SelectQuery): this {
-		// PostgreSQL requires the first SELECT to be wrapped in parentheses
-		// when it has a WHERE clause before INTERSECT ALL
-		const currentSql = this.sql.toString();
-		const hasWhere = currentSql.toUpperCase().includes('WHERE');
-		
-		if (hasWhere) {
-			// Wrap the existing SELECT in parentheses
-			this.sql.prepend('(');
-			this.sql.trimEnd(' ');
-			this.sql.append(')');
-		}
-
-		this.intersectAllStatement();
-		this.select(query);
-
-		return this;
-	}
 }
